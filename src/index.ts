@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import { parseEnv, log } from 'tabtab';
 import { addCommand } from './commands/add.js';
 import { resumeCommand } from './commands/resume.js';
 import { removeCommand } from './commands/remove.js';
@@ -8,6 +9,15 @@ import { removeAllCommand } from './commands/removeAll.js';
 import { setupCommand } from './commands/setup.js';
 import { uninstallCommand } from './commands/uninstall.js';
 import { cleanupCommand } from './commands/cleanup.js';
+import { installCompletion, uninstallCompletion, getCompletions } from './commands/completion.js';
+
+// Handle tab completion queries
+const env = parseEnv(process.env);
+if (env.complete) {
+  const completions = getCompletions();
+  log(completions);
+  process.exit(0);
+}
 
 const program = new Command();
 
@@ -29,6 +39,7 @@ program
 
 program
   .command('remove')
+  .alias('rm')
   .description('Remove a URL from your reading list')
   .action(removeCommand);
 
@@ -51,5 +62,19 @@ program
   .command('cleanup')
   .description('Internal command used by the launch agent (clears all URLs)')
   .action(cleanupCommand);
+
+const completionCommand = program
+  .command('completion')
+  .description('Manage tab completion for your shell');
+
+completionCommand
+  .command('install')
+  .description('Install tab completion for add, resume, and rm commands')
+  .action(installCompletion);
+
+completionCommand
+  .command('uninstall')
+  .description('Uninstall tab completion')
+  .action(uninstallCompletion);
 
 program.parse();
