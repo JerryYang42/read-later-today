@@ -9,6 +9,7 @@ A CLI tool to manage reading material URLs throughout the day with automatic dai
 ## Features
 
 - 📝 Save URLs with a simple command
+- ⌨️ **Quick Add with Keyboard Shortcuts** - Save URLs instantly from any app (no terminal needed!)
 - 🔍 Interactive terminal UI with arrow-key navigation
 - 🌅 Automatic cleanup at 5AM daily (via launchd)
 - 💾 Local storage in `~/.read-later-today.json`
@@ -44,6 +45,18 @@ read-later-today resume
 read-later-today setup
 ```
 
+### ⚡ Quick Add with Keyboard Shortcut (Recommended!)
+
+Save URLs instantly from any browser without opening the terminal:
+
+1. Copy a URL (Cmd+C in your browser)
+2. Press your keyboard shortcut (e.g., **Cmd+Shift+R**)
+3. See notification: "✓ Saved to Read Later"
+
+**[→ Setup instructions for macOS Shortcuts](shortcuts/SETUP.md)**
+
+This is much faster than switching to the terminal! The keyboard shortcut works system-wide from any application.
+
 ## Commands
 
 ### `add <url>`
@@ -55,6 +68,24 @@ read-later-today add https://example.com/interesting-article
 ```
 
 The URL must be a valid HTTP or HTTPS URL.
+
+**Options:**
+- `-s, --silent` - Suppress terminal output (useful for background execution)
+- `-n, --notify` - Show macOS notification on success/failure
+- `--source <source>` - Track entry method (`cli` or `shortcut`)
+
+**Examples:**
+
+```bash
+# Standard usage
+read-later-today add https://example.com
+
+# With notification (useful for scripts)
+read-later-today add https://example.com --notify
+
+# Silent mode with notification (used by keyboard shortcuts)
+read-later-today add https://example.com --silent --notify --source shortcut
+```
 
 ### `resume`
 

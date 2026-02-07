@@ -44,7 +44,7 @@ export async function saveData(data: DataStore): Promise<void> {
   }
 }
 
-export async function addUrl(url: string, title: string): Promise<ReadingItem> {
+export async function addUrl(url: string, title: string, source?: 'cli' | 'shortcut'): Promise<ReadingItem> {
   const data = await loadData();
 
   const item: ReadingItem = {
@@ -52,6 +52,7 @@ export async function addUrl(url: string, title: string): Promise<ReadingItem> {
     url,
     title,
     addedAt: new Date().toISOString(),
+    ...(source && { source }),
   };
 
   data.urls.push(item);

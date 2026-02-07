@@ -30,6 +30,9 @@ program
   .command('add')
   .description('Add a URL to your reading list')
   .argument('<url>', 'URL to add')
+  .option('-s, --silent', 'Suppress output')
+  .option('-n, --notify', 'Show notification')
+  .option('--source <source>', 'Source of the URL (cli or shortcut)')
   .action(addCommand);
 
 program
