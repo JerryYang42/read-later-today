@@ -10,6 +10,7 @@ import { setupCommand } from './commands/setup.js';
 import { uninstallCommand } from './commands/uninstall.js';
 import { cleanupCommand } from './commands/cleanup.js';
 import { installCompletion, uninstallCompletion, getCompletions } from './commands/completion.js';
+import { statusCommand } from './commands/status.js';
 
 // Handle tab completion queries
 const env = parseEnv(process.env);
@@ -79,5 +80,12 @@ completionCommand
   .command('uninstall')
   .description('Uninstall tab completion')
   .action(uninstallCompletion);
+
+program
+  .command('status')
+  .description('Show reading list status from various sources')
+  .option('--safari', 'Show Safari Reading List status')
+  .option('--all', 'Show all sources (default)')
+  .action(statusCommand);
 
 program.parse();

@@ -87,6 +87,32 @@ read-later-today add https://example.com --notify
 read-later-today add https://example.com --silent --notify --source shortcut
 ```
 
+### `status`
+
+Show reading list status from various sources.
+
+```bash
+read-later-today status
+```
+
+By default, shows all available sources (currently Safari Reading List only).
+
+**Options:**
+- `--safari` - Show Safari Reading List status only
+- `--all` - Show all sources (default)
+
+**Output:**
+```
+Safari Reading List: 23 unread items
+  • 5 this week
+  • 10 this month
+  • 8 older
+```
+
+**Prerequisites:**
+- macOS only (Safari is macOS-specific)
+- Requires Full Disk Access for Terminal (see Setup below)
+
 ### `resume`
 
 Open a saved URL in your default browser. Displays an interactive list to choose from.
@@ -179,6 +205,25 @@ The plist file configures:
 - **Schedule:** Daily at 5:00 AM
 - **Command:** Runs `node /path/to/read-later-today/dist/index.js cleanup`
 
+## Safari Reading List Integration
+
+The `status` command can monitor your Safari Reading List backlog. This requires granting Full Disk Access to your terminal.
+
+### Granting Full Disk Access
+
+1. Open **System Settings**
+2. Go to **Privacy & Security** → **Full Disk Access**
+3. Click the **"+"** button
+4. Navigate to and add **Terminal.app** (or your terminal emulator)
+5. Restart your terminal application
+
+### Troubleshooting Safari Access
+
+If you see "Cannot access Safari data":
+- Verify Full Disk Access is granted to your terminal
+- Restart your terminal completely (quit and reopen)
+- Try running: `ls ~/Library/Safari/Bookmarks.plist` to test access
+
 ## Debugging
 
 ### Check if the launch agent is installed
@@ -251,7 +296,8 @@ rm -rf read-later-today
 ## Requirements
 
 - **Node.js:** >= 18.0.0
-- **Platform:** macOS (uses launchd)
+- **Platform:** macOS (uses launchd for cleanup, Safari for reading list)
+- **Optional:** Full Disk Access for Safari Reading List integration
 
 ## License
 
